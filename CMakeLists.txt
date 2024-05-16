@@ -15,7 +15,21 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(CPP_Project main.cpp)
+include_directories(
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/src/Headers)
+
+file(GLOB_RECURSE SRC_CPP ${PROJECT_SOURCE_DIR}/src/*.cpp )
+file(GLOB_RECURSE SRC_H ${PROJECT_SOURCE_DIR}/src/Headers/*.h )
+file(GLOB_RECURSE SRC_UI ${PROJECT_SOURCE_DIR}/src/Forms/*.ui)
+set(QT_RESOURCES resource/res.qrc)
+
+add_executable(CPP_Project main.cpp
+        ${SRC_CPP}
+        ${SRC_H}
+        ${SRC_UI}
+        ${QT_RESOURCES}
+)
 
 target_link_libraries(CPP_Project
         Qt::Core
