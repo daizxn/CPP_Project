@@ -4,9 +4,12 @@
 
 #include "User.h"
 
+#include <utility>
+
 User::User(const QString &numbering, const QString &name, const QString &age, const QString &education,
            const QString &ethnic, const QString &specialized, const QString &job, const QString &department,
            const QString &position) {
+    id=-1;
     Info[UserInfoEnum::Numbering] = numbering;
     Info[UserInfoEnum::Name] = name;
     Info[UserInfoEnum::Age] = age;
@@ -63,8 +66,9 @@ std::ifstream &operator>>(std::ifstream &is, User &user) {
     return is;
 }
 
-void User::SetInfo(UserInfoEnum index, QString info) {
+User& User::SetInfo(UserInfoEnum index, QString info) {
     Info[index] = info;
+    return *this;
 }
 
 QString User::GetInfo(UserInfoEnum index) {
@@ -75,13 +79,16 @@ int User::GetId() const {
     return id;
 }
 
-void User::SetId(int id) {
+User& User::SetId(int id) {
     this->id = id;
+    return *this;
 }
 
 bool User::isMatch(const User &param) const {
     for(int i=0;i<UserInfoEnum::USERINFO_COUNT;i++){
-        if(param.Info[i].isEmpty())
+        if(param.id!=-1 && id!=param.id)
+            return false;
+        if(param.Info[i]=="null")
             continue;
         if(Info[i]!=param.Info[i])
             return false;

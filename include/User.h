@@ -7,19 +7,19 @@
 
 #include <fstream>
 #include <string>
-#include <QWidget>
+
 
 #include "Enum/UserInfoEnum.h"
 
-class User : public QWidget {
-Q_OBJECT
+class User  {
+
 
 public:
-    explicit User(const QString &numbering = "", const QString &name = "", const QString &age = "",
-                  const QString &education = "",
-                  const QString &ethnic = "", const QString &specialized = "", const QString &job = "",
-                  const QString &department = "",
-                  const QString &position = "");
+    explicit User(const QString &numbering = "null", const QString &name = "null", const QString &age = "null",
+                  const QString &education = "null",
+                  const QString &ethnic = "null", const QString &specialized = "null", const QString &job = "null",
+                  const QString &department = "null",
+                  const QString &position = "null");
 
     User(const User &user);
 
@@ -31,17 +31,17 @@ public:
 
     friend std::ofstream &operator<<(std::ofstream &os, const User &user);
 
-    void SetInfo(UserInfoEnum index, QString info);
+    User& SetInfo(UserInfoEnum index, QString info);
 
     QString GetInfo(UserInfoEnum index);
 
     int GetId() const;
 
-    void SetId(int id);
+    User& SetId(int id);
 
     bool isMatch(const User &param) const;
 private:
-    int id;
+    int id=-1;
     QString Info[UserInfoEnum::USERINFO_COUNT];
 };
 

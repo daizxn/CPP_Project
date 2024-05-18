@@ -22,8 +22,8 @@ void Company::addUser(User &user) {
     userList.pushBack(user);
 }
 
-void Company::deleteUser(const User &user) {
-    userList.erase(user.GetId());
+void Company::deleteUserById(const int &id) {
+    userList.deleteById(id);
 }
 
 void Company::updateUser(int id, const User &user) {
@@ -35,4 +35,34 @@ Company Company::selectUser(const User &param) {
     return result;
 }
 
+User Company::selectUserById(const int &id) {
+    User param;
+    param.SetId(id);
+    Company result(this->userList.select(param), this->key);
+    return result.userList.get(0);
+}
+
+std::ifstream &operator>>(std::ifstream &is, Company &company) {
+    is >> company.key;
+    while (!is.eof()) {
+        User user;
+        is >> user;
+        company.userList.pushBack(user);
+    }
+    return is;
+}
+
+std::ofstream &operator<<(std::ofstream &os, const Company &company) {
+    os << company.key << '\n';
+    os << company.userList;
+    return os;
+}
+
+void Company::saveToFile(const std::string &filePath) {
+    file::Write(*this, filePath);
+}
+
+void Company::loadFromFile(const std::string &filePath) {
+    file::Read(*this, filePath);
+}
 

@@ -71,6 +71,7 @@ public:
 
     void insert(T data, int index);     //插入
     void erase(int index);              //删除
+    void deleteById(int id);            //根据id删除
     void clear();                       //清空
 
     T get(int index);                   //获取
@@ -326,6 +327,27 @@ void List<T>::insert(T data, int index) {
 }
 
 template<typename T>
+void List<T>::deleteById(int id) {
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (ptr->data.GetId() == id) {
+            if (ptr == head) {
+                popFront();
+            } else if (ptr == tail) {
+                popBack();
+            } else {
+                ptr->prev->next = ptr->next;
+                ptr->next->prev = ptr->prev;
+                delete ptr;
+                size--;
+            }
+            return;
+        }
+        ptr = ptr->next;
+    }
+}
+
+template<typename T>
 void List<T>::erase(int index) {
     if (index < 0 || index >= size) {
         return;
@@ -491,7 +513,7 @@ List<T> List<T>:: select(T param) {
     List<T> resList;
     Node *ptr = head;
     while (ptr != nullptr) {
-        if (param.isMatch(ptr->data)) {
+        if (ptr->data.isMatch(param)) {
             resList.pushBack(ptr->data);
         }
         ptr = ptr->next;
