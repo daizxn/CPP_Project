@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <fstream>
+#include "User.h"
+
 template<typename T>
 class List {
 private:
@@ -41,6 +43,7 @@ public:
     List(const List<T> &list);  //拷贝构造函数
     ~List();                    //析构函数
 
+    List<T> select(T param);
     /**
      * 运算符重载
      */
@@ -75,6 +78,8 @@ public:
     unsigned int getSize();             //获取链表长度
     bool isEmpty();                     //判断是否为空
     int find(T data);                   //查找
+
+    //查找
     void print();                       //打印
 
     /**
@@ -88,6 +93,7 @@ public:
     friend List<U> sort(List<U> &lists); //排序
     template<class U>
     friend List<U> sort(List<U> &lists, bool (*cmp)(U, U)); //自定义排序
+
 };
 
 
@@ -480,4 +486,16 @@ List<T> sort(List<T> &lists, bool (*cmp)(T, T)) {
     return newList;
 }
 
+template<typename T>
+List<T> List<T>:: select(T param) {
+    List<T> resList;
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (param.isMatch(ptr->data)) {
+            resList.pushBack(ptr->data);
+        }
+        ptr = ptr->next;
+    }
+    return resList;
+}
 #endif //CPP_PROJECT_LIST_H

@@ -110,38 +110,18 @@ color: rgb(255, 255, 255);</string>
          </property>
          <widget class="QWidget" name="employPage">
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="5">
-            <widget class="QLabel" name="searchIcon">
-             <property name="minimumSize">
+           <item row="0" column="4">
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
               <size>
-               <width>30</width>
-               <height>30</height>
+               <width>40</width>
+               <height>20</height>
               </size>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-image: url(:/img/img/search.png);</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="deleteButton">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: #FF4500;</string>
-             </property>
-             <property name="text">
-              <string>删除</string>
-             </property>
-            </widget>
+            </spacer>
            </item>
            <item row="0" column="6">
             <widget class="QLineEdit" name="lineEdit">
@@ -159,15 +139,26 @@ background-color: #FF4500;</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="7">
-            <widget class="QTableWidget" name="employeeTableWidget"/>
-           </item>
            <item row="0" column="3">
             <widget class="QPushButton" name="changeButton">
              <property name="text">
               <string>排序</string>
              </property>
             </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="deleteButton">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #FF4500;</string>
+             </property>
+             <property name="text">
+              <string>删除</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="7">
+            <widget class="QTableWidget" name="employeeTableWidget"/>
            </item>
            <item row="0" column="2">
             <widget class="QPushButton" name="sortButton">
@@ -191,18 +182,27 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="4">
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
+           <item row="0" column="5">
+            <widget class="QLabel" name="searchIcon">
+             <property name="minimumSize">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>30</width>
+               <height>30</height>
               </size>
              </property>
-            </spacer>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-image: url(:/img/img/search.png);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
