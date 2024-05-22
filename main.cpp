@@ -13,9 +13,11 @@ int main(int argc, char *argv[]) {
 //    QDebug()<<UserInfoName_en[UserInfoEnum::Numbering].toStdString();
 
     MainWindow w;
-    w.show();
+//w.show();
 
-    Company company;
+
+
+    Company company(0);
     company.loadFromFile();
     Company text= company.selectUser(User().SetInfo(UserInfoEnum::Numbering,"a"));
     text.deleteUserById(2);

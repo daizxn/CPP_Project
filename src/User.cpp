@@ -57,9 +57,10 @@ std::ofstream &operator<<(std::ofstream &os, const User &user) {
 }
 
 std::ifstream &operator>>(std::ifstream &is, User &user) {
+    std::string temp;
     is >> user.id;
     for (QString &i: user.Info) {
-        std::string temp;
+
         is >> temp;
         i = QString::fromStdString(temp);
     }

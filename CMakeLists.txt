@@ -23,12 +23,15 @@ file(GLOB_RECURSE SRC_CPP ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE SRC_H ${PROJECT_SOURCE_DIR}/src/Headers/*.h)
 file(GLOB_RECURSE SRC_UI ${PROJECT_SOURCE_DIR}/src/Forms/*.ui)
 set(QT_RESOURCES resource/res.qrc)
+set(MOC_HEADER
+        ${PROJECT_SOURCE_DIR}/include/Company.h)
 
 add_executable(CPP_Project main.cpp
         ${SRC_CPP}
         ${SRC_H}
         ${SRC_UI}
-        ${QT_RESOURCES})
+        ${QT_RESOURCES}
+        ${MOC_HEADER})
 
 target_link_libraries(CPP_Project
         Qt::Core

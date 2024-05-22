@@ -223,7 +223,8 @@ std::ofstream &operator<<(std::ofstream &os, const List<T> &list) {
     }
     typename List<T>::Node *ptr = list.head;
     while (ptr != nullptr) {
-        os << ptr->data << std::endl;
+        os<<'\n';
+        os <<ptr->data;
         ptr = ptr->next;
     }
     return os;

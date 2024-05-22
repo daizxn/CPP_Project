@@ -4,8 +4,13 @@
 
 #include "Company.h"
 
+Company::Company(QWidget *parent) : QWidget(parent) {}
 
 Company::Company(int key) : key(key) {}
+
+Company::~Company() {
+    userList.~List<User>();
+}
 
 Company::Company(const Company &company) {
     this->key = company.key;
@@ -44,16 +49,16 @@ User Company::selectUserById(const int &id) {
 
 std::ifstream &operator>>(std::ifstream &is, Company &company) {
     is >> company.key;
-    while (!is.eof()) {
-        User user;
-        is >> user;
+    User user;
+    while (is>>user) {
+
         company.userList.pushBack(user);
     }
     return is;
 }
 
 std::ofstream &operator<<(std::ofstream &os, const Company &company) {
-    os << company.key << '\n';
+    os << company.key;
     os << company.userList;
     return os;
 }

@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <QFile>
 
 #include "config.h"
 
@@ -31,9 +32,7 @@ namespace file {
         if (!ifs.is_open()) {
             throw std::runtime_error("File open failed");
         }
-        while (!ifs.eof()) {
-            ifs >> data;
-        }
+        while (ifs>>data);
         ifs.close();
     }
 }
