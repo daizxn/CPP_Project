@@ -55,4 +55,5 @@ void MainWindow::treeBarLoad() {
 
 void MainWindow::Exit() {
     company->saveToFile();
+    exit(0);
 }

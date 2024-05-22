@@ -8,9 +8,6 @@ Company::Company(QWidget *parent) : QWidget(parent) {}
 
 Company::Company(int key) : key(key) {}
 
-Company::~Company() {
-    userList.~List<User>();
-}
 
 Company::Company(const Company &company) {
     this->key = company.key;

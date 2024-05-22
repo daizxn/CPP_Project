@@ -21,7 +21,7 @@ Q_OBJECT
 public:
     explicit Company(QWidget *parent= nullptr);
     explicit Company(int key = 0);
-    ~Company();
+
     explicit Company(const List<User> &userList, int key = 0);
 
     Company(const Company &company);
