@@ -106,7 +106,7 @@ template<typename T>
 void List<T>::deleteByParam(const T param) {
     Node *ptr = head;
     while (ptr != nullptr) {
-        if (param.isMatch(ptr->data)) {
+        if (ptr->data.isMatch(param)) {
             if (ptr == head) {
                 popFront();
             } else if (ptr == tail) {

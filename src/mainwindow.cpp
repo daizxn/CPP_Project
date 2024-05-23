@@ -138,6 +138,8 @@ void MainWindow::deleteButton() {
 
     QString numbering=item->text();
 
+    qDebug()<<numbering;
+
     User param;
     param.SetInfo(UserInfoEnum::Numbering,numbering);
 
