@@ -29,7 +29,7 @@ public:
 
     void treeBarLoad();
 
-    void employtableWidgetLoad();
+    void employTableWidgetLoad();
 
     ~MainWindow() override;
 
@@ -39,7 +39,7 @@ private slots:
 
     void Exit();
     /*每行button操作槽函数*/
-    void updataButton();
+    void updateButton();
     void deleteButton();
 
 private:

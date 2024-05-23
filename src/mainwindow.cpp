@@ -31,7 +31,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onLoad() {
     treeBarLoad();
-    employtableWidgetLoad();
+    employTableWidgetLoad();
 }
 
 void MainWindow::treeBarLoad() {
@@ -53,7 +53,7 @@ void MainWindow::treeBarLoad() {
     ui->treeBar->addTopLevelItem(jobBar);//将jobBar添加到树形控件中
 }
 
-void MainWindow::employtableWidgetLoad() {
+void MainWindow::employTableWidgetLoad() {
 
     ui->employeeTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//整行选中的方式
     ui->employeeTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止修改
@@ -65,7 +65,7 @@ void MainWindow::employtableWidgetLoad() {
 
     //添加表头
     List<QString> list;
-    for (auto i: UserInfoName_zh) {
+    for (const auto& i: UserInfoName_zh) {
         list.pushBack(i);
     }
     list.pushBack("操作");
@@ -74,31 +74,31 @@ void MainWindow::employtableWidgetLoad() {
 
     int rowCount = ui->employeeTableWidget->rowCount();
     //添加数据
-    int size = company->userList.getSize();
+    unsigned int size = company->userList.getSize();
     while (rowCount != size) {
         ui->employeeTableWidget->insertRow(rowCount);
-        int i = 0;
+        int i;
         for (i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
             ui->employeeTableWidget->setItem(rowCount, i, new QTableWidgetItem(
                     company->userList.get(rowCount).GetInfo(UserInfoEnum(i))));
         }
         /*添加操作button*/
-        QWidget *qWidget = new QWidget(ui->employeeTableWidget);
-        QHBoxLayout *qhBoxLayout = new QHBoxLayout(qWidget);
+        auto *qWidget = new QWidget(ui->employeeTableWidget);
+        auto *qhBoxLayout = new QHBoxLayout(qWidget);
 
         //修改
-        QPushButton *updataButton = new QPushButton(ui->employeeTableWidget);
-        updataButton->setText("修改");
-        SetBtnStyle(updataButton, "30,227,207");
-        connect(updataButton,&QPushButton::clicked,this,&MainWindow::updataButton);
+        auto *updateButton = new QPushButton(ui->employeeTableWidget);
+        updateButton->setText("修改");
+        SetBtnStyle(updateButton, "30,227,207");
+        connect(updateButton, &QPushButton::clicked, this, &MainWindow::updateButton);
 
         //删除
-        QPushButton *deleteButton = new QPushButton(ui->employeeTableWidget);
+        auto *deleteButton = new QPushButton(ui->employeeTableWidget);
         deleteButton->setText("删除");
         SetBtnStyle(deleteButton, "204,153,0");
         connect(deleteButton,&QPushButton::clicked,this,&MainWindow::deleteButton);
 
-        qhBoxLayout->addWidget(updataButton);
+        qhBoxLayout->addWidget(updateButton);
         qhBoxLayout->addWidget(deleteButton);
 
         qhBoxLayout->setContentsMargins(0, 0, 0, 0);
@@ -120,7 +120,7 @@ void MainWindow::Exit() {
     exit(0);
 }
 
-void MainWindow::updataButton(){
+void MainWindow::updateButton(){
 
 }
 
@@ -131,7 +131,6 @@ void MainWindow::deleteButton() {
     int y = w_parent->frameGeometry().y();
     QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x,y));
     int row = index.row();
-    int col = index.column();
 
 
     QTableWidgetItem *item = ui->employeeTableWidget->item(row, 0);

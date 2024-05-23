@@ -194,7 +194,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QPushButton" name="updataButton">
+            <widget class="QPushButton" name="updateButton">
              <property name="styleSheet">
               <string notr="true">background-color: #1E90FF;
 color: rgb(255, 255, 255);</string>
