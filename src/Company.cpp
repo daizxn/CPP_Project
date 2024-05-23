@@ -28,7 +28,7 @@ void Company::deleteUserById(const int &id) {
     userList.deleteById(id);
 }
 void Company::deleteUserByParam(const User param) {
-    userList.deleteByParam(param)
+    userList.deleteByParam(param);
 }
 void Company::updateUser(int id, const User &user) {
     userList.set(id, user);
