@@ -6,9 +6,10 @@
 #define CPP_PROJECT_LIST_H
 
 
-
 #include <iostream>
 #include <fstream>
+#include <QList>
+
 #include "User.h"
 
 template<typename T>
@@ -44,6 +45,7 @@ public:
     ~List();                    //析构函数
 
     List<T> select(T param);
+
     /**
      * 运算符重载
      */
@@ -72,6 +74,7 @@ public:
     void insert(T data, int index);     //插入
     void erase(int index);              //删除
     void deleteById(int id);            //根据id删除
+    void deleteByParam(const T param);               //根据用户信息删除
     void clear();                       //清空
 
     T get(int index);                   //获取
@@ -82,6 +85,8 @@ public:
 
     //查找
     void print();                       //打印
+
+    QList<T> toQList();
 
     /**
      * 链表类外其余操作
@@ -97,6 +102,39 @@ public:
 
 };
 
+template<typename T>
+void List<T>::deleteByParam(const T param) {
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (param.isMatch(ptr->data)) {
+            if (ptr == head) {
+                popFront();
+            } else if (ptr == tail) {
+                popBack();
+            } else {
+                ptr->prev->next = ptr->next;
+                ptr->next->prev = ptr->prev;
+                delete ptr;
+                size--;
+            }
+            return;
+        }
+        ptr = ptr->next;
+    }
+
+}
+
+template<typename T>
+QList<T> List<T>::toQList() {
+    QList<T> result;
+    Node *ptr;
+    ptr = head;
+    while (ptr != nullptr) {
+        result.append(ptr->data);
+        ptr = ptr->next;
+    }
+    return result;
+}
 
 
 /**
@@ -153,8 +191,8 @@ List<T>::~List() {
  * 运算符重载
  */
 template<typename T>
-List<T>& List<T>::operator=(const List<T> &list) {
-    if(this==&list) {
+List<T> &List<T>::operator=(const List<T> &list) {
+    if (this == &list) {
         return *this;
     }
     clear();
@@ -184,7 +222,7 @@ bool operator==(const List<T> &list1, const List<T> &list2) {
 }
 
 template<typename T>
-List<T>& operator+(const List<T> &list1, const List<T> &list2) {
+List<T> &operator+(const List<T> &list1, const List<T> &list2) {
     List<T> newList;
     newList = new List<T>(list1);
     typename List<T>::Node *ptr = list2.head;
@@ -197,7 +235,7 @@ List<T>& operator+(const List<T> &list1, const List<T> &list2) {
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const List<T> &list) {
-    if(list.head == nullptr) {
+    if (list.head == nullptr) {
         return os;
     }
     typename List<T>::Node *ptr = list.head;
@@ -218,17 +256,18 @@ std::istream &operator>>(std::istream &is, List<T> &list) {
 
 template<typename T>
 std::ofstream &operator<<(std::ofstream &os, const List<T> &list) {
-    if(list.head == nullptr) {
+    if (list.head == nullptr) {
         return os;
     }
     typename List<T>::Node *ptr = list.head;
     while (ptr != nullptr) {
-        os<<'\n';
-        os <<ptr->data;
+        os << '\n';
+        os << ptr->data;
         ptr = ptr->next;
     }
     return os;
 }
+
 template<typename T>
 std::ifstream &operator>>(std::ifstream &is, List<T> &list) {
     T data;
@@ -236,6 +275,7 @@ std::ifstream &operator>>(std::ifstream &is, List<T> &list) {
     list.pushBack(data);
     return is;
 }
+
 /**
  * 常见链表操作
  */
@@ -510,7 +550,7 @@ List<T> sort(List<T> &lists, bool (*cmp)(T, T)) {
 }
 
 template<typename T>
-List<T> List<T>:: select(T param) {
+List<T> List<T>::select(T param) {
     List<T> resList;
     Node *ptr = head;
     while (ptr != nullptr) {
@@ -521,4 +561,5 @@ List<T> List<T>:: select(T param) {
     }
     return resList;
 }
+
 #endif //CPP_PROJECT_LIST_H

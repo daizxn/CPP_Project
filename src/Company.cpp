@@ -27,7 +27,9 @@ void Company::addUser(User &user) {
 void Company::deleteUserById(const int &id) {
     userList.deleteById(id);
 }
-
+void Company::deleteUserByParam(const User param) {
+    userList.deleteByParam(param)
+}
 void Company::updateUser(int id, const User &user) {
     userList.set(id, user);
 }
@@ -68,3 +70,6 @@ void Company::loadFromFile(const std::string &filePath) {
     file::Read(*this, filePath);
 }
 
+int Company::getSize() {
+    return userList.getSize();
+}

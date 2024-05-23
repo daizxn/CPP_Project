@@ -6,6 +6,11 @@
 #define CPP_PROJECT_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QObject>
+#include <QString>
+#include <QDebug>
+
 #include "Company.h"
 
 QT_BEGIN_NAMESPACE
@@ -21,17 +26,26 @@ public:
 
     /*页面初始化加载*/
     void onLoad();
+
     void treeBarLoad();
+
+    void employtableWidgetLoad();
 
     ~MainWindow() override;
 
+
+
 private slots:
+
     void Exit();
+    /*每行button操作槽函数*/
+    void updataButton();
+    void deleteButton();
 
 private:
     Ui::MainWindow *ui;
-    Company* company;
+    Company *company;
 };
 
-
+void SetBtnStyle(QPushButton *pBtn, QString clr);
 #endif //CPP_PROJECT_MAINWINDOW_H

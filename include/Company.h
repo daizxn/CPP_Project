@@ -15,20 +15,26 @@
 
 class Company;
 
-class Company :public QWidget{
+class Company : public QWidget {
 
 Q_OBJECT
+
 public:
-    explicit Company(QWidget *parent= nullptr);
+    explicit Company(QWidget *parent = nullptr);
+
     explicit Company(int key = 0);
 
     explicit Company(const List<User> &userList, int key = 0);
 
     Company(const Company &company);
 
+    int getSize();
+
     void addUser(User &user);
 
     void deleteUserById(const int &id);
+
+    void deleteUserByParam(const User param);
 
     void updateUser(int id, const User &user);
 
@@ -48,9 +54,7 @@ public:
 
     friend std::ifstream &operator>>(std::ifstream &is, Company &company);
 
-
-private:
-    int key{};
+    int key;
     List<User> userList;
 signals:
 };

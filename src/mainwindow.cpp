@@ -4,13 +4,15 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_MainWindow.h" resolved
 
+
+
 #include "mainwindow.h"
 #include "Company.h"
 #include "Forms/ui_mainwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow){
+        QMainWindow(parent), ui(new Ui::MainWindow) {
 
     company = new Company(parent);
     company->loadFromFile();
@@ -19,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     /*connect*/
-    connect(ui->exitButton,&QPushButton::clicked ,this,&MainWindow::Exit);
+    connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::Exit);
 }
 
 MainWindow::~MainWindow() {
@@ -29,6 +31,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onLoad() {
     treeBarLoad();
+    employtableWidgetLoad();
 }
 
 void MainWindow::treeBarLoad() {
@@ -50,10 +53,107 @@ void MainWindow::treeBarLoad() {
     ui->treeBar->addTopLevelItem(jobBar);//将jobBar添加到树形控件中
 }
 
+void MainWindow::employtableWidgetLoad() {
+
+    ui->employeeTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//整行选中的方式
+    ui->employeeTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止修改
+    ui->employeeTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);//可以选中单个
+
+
+    ui->employeeTableWidget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 1);
+    ui->employeeTableWidget->setColumnWidth(UserInfoEnum::USERINFO_COUNT,150);
+
+    //添加表头
+    List<QString> list;
+    for (auto i: UserInfoName_zh) {
+        list.pushBack(i);
+    }
+    list.pushBack("操作");
+    ui->employeeTableWidget->setHorizontalHeaderLabels(list.toQList());
+
+
+    int rowCount = ui->employeeTableWidget->rowCount();
+    //添加数据
+    int size = company->userList.getSize();
+    while (rowCount != size) {
+        ui->employeeTableWidget->insertRow(rowCount);
+        int i = 0;
+        for (i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
+            ui->employeeTableWidget->setItem(rowCount, i, new QTableWidgetItem(
+                    company->userList.get(rowCount).GetInfo(UserInfoEnum(i))));
+        }
+        /*添加操作button*/
+        QWidget *qWidget = new QWidget(ui->employeeTableWidget);
+        QHBoxLayout *qhBoxLayout = new QHBoxLayout(qWidget);
+
+        //修改
+        QPushButton *updataButton = new QPushButton(ui->employeeTableWidget);
+        updataButton->setText("修改");
+        SetBtnStyle(updataButton, "30,227,207");
+        connect(updataButton,&QPushButton::clicked,this,&MainWindow::updataButton);
+
+        //删除
+        QPushButton *deleteButton = new QPushButton(ui->employeeTableWidget);
+        deleteButton->setText("删除");
+        SetBtnStyle(deleteButton, "204,153,0");
+        connect(deleteButton,&QPushButton::clicked,this,&MainWindow::deleteButton);
+
+        qhBoxLayout->addWidget(updataButton);
+        qhBoxLayout->addWidget(deleteButton);
+
+        qhBoxLayout->setContentsMargins(0, 0, 0, 0);
+
+        ui->employeeTableWidget->setCellWidget(rowCount, i, qWidget);
+
+
+        ui->employeeTableWidget->setRowHeight(rowCount, 30);
+        rowCount++;
+    }
+
+
+}
 
 /*SLOT 实现*/
 
 void MainWindow::Exit() {
     company->saveToFile();
     exit(0);
+}
+
+void MainWindow::updataButton(){
+
+}
+
+void MainWindow::deleteButton() {
+    auto *btn = (QPushButton*)(sender());
+    auto *w_parent = (QWidget*)btn->parent();
+    int x = w_parent->frameGeometry().x();
+    int y = w_parent->frameGeometry().y();
+    QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x,y));
+    int row = index.row();
+    int col = index.column();
+
+
+    QTableWidgetItem *item = ui->employeeTableWidget->item(row, 0);
+
+    QString numbering=item->text();
+
+    User param;
+    param.SetInfo(UserInfoEnum::Numbering,numbering);
+
+    company->deleteUserByParam(param);
+
+    ui->employeeTableWidget->removeRow(row);
+
+}
+
+/*style*/
+
+void SetBtnStyle(QPushButton *pBtn, QString clr) {
+    QString style = QString(
+            "QPushButton{min-height:18px;font-size:10px;color:rgb(255, 255, 255);background:rgba(%1,0.8);border:1px;border-radius:5px;padding:1px 1px;font-family:Microsoft YaHei;}"
+            "QPushButton:hover{color:rgb(255, 255, 255);border-style:solid;background: rgba(%2,0.6);border-radius:5px;border:1px;font-family:Microsoft YaHei;}"
+            "QPushButton:pressed{color:rgb(255, 255, 255);border-style:solid;border-radius:5px;background: rgba(%3,0.4);border:1px;font-family:Microsoft YaHei;}").arg(
+            clr).arg(clr).arg(clr);
+    pBtn->setStyleSheet(style);
 }

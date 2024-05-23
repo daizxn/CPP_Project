@@ -18,6 +18,18 @@
     <string notr="true">background-color: #007FFF;</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item row="0" column="0" colspan="2">
      <widget class="QWidget" name="titalwidget" native="true">
       <property name="styleSheet">
@@ -182,7 +194,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QPushButton" name="addButton">
+            <widget class="QPushButton" name="updataButton">
              <property name="styleSheet">
               <string notr="true">background-color: #1E90FF;
 color: rgb(255, 255, 255);</string>

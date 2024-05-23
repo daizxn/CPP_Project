@@ -86,9 +86,9 @@ User& User::SetId(int id) {
 }
 
 bool User::isMatch(const User &param) const {
+    if(param.id!=-1 && id!=param.id)
+        return false;
     for(int i=0;i<UserInfoEnum::USERINFO_COUNT;i++){
-        if(param.id!=-1 && id!=param.id)
-            return false;
         if(param.Info[i]=="null")
             continue;
         if(Info[i]!=param.Info[i])
