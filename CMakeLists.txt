@@ -36,8 +36,7 @@ add_executable(CPP_Project main.cpp
 target_link_libraries(CPP_Project
         Qt::Core
         Qt::Gui
-        Qt::Widgets
-)
+        Qt::Widgets)
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)

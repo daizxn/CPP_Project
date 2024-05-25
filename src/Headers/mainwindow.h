@@ -13,6 +13,7 @@
 
 #include "Company.h"
 #include "userinfodialog.h"
+#include "sortinfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,27 +31,34 @@ public:
 
     void treeBarLoad();
 
-    void employTableWidgetLoad();
+    void employTableWidgetLoad(Company *data);
 
     ~MainWindow() override;
-
 
 
 private slots:
 
     void Exit();
+
     /*每行button操作槽函数*/
-    void saveButton();
     void updateButton();
+
     void deleteButton();
+
     void addButton();
+
+    void sortButton();
+
+    void saveButton();
 
 private:
     Ui::MainWindow *ui;
     UserInfoDialog *userInfoDialog;
+    SortInfo *sortInfo;
 
     Company *company;
 };
 
 void SetBtnStyle(QPushButton *pBtn, QString clr);
+
 #endif //CPP_PROJECT_MAINWINDOW_H
