@@ -60,7 +60,6 @@ std::ifstream &operator>>(std::ifstream &is, User &user) {
     std::string temp;
     is >> user.id;
     for (QString &i: user.Info) {
-
         is >> temp;
         i = QString::fromStdString(temp);
     }

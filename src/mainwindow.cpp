@@ -141,6 +141,8 @@ void MainWindow::addButton() {
     //设置模式为添加
     userInfoDialog->setFlag(false);
     //加载数据
+    User param;
+    userInfoDialog->setUser(param);
     userInfoDialog->setCompany(company);
     userInfoDialog->load();
     userInfoDialog->exec();
