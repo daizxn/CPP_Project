@@ -31,10 +31,11 @@ void Company::deleteUserByParam(const User param) {
     userList.deleteByParam(param);
 }
 void Company::updateUser(int id, const User &user) {
-    userList.set(id, user);
+    userList.updateById(id,user);
 }
 
 Company Company::selectUser(const User &param) {
+    this->userList.select(param);
     Company result(this->userList.select(param), this->key);
     return result;
 }

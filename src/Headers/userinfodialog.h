@@ -6,6 +6,7 @@
 #define CPP_PROJECT_USERINFODIALOG_H
 
 #include <QDialog>
+#include <QMessageBox>
 
 #include "Enum/UserInfoEnum.h"
 #include "Enum/JobEnum.h"
@@ -13,6 +14,7 @@
 #include "Enum/PositionEnum.h"
 
 #include "User.h"
+#include "Company.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class UserInfoDialog; }
@@ -24,22 +26,33 @@ Q_OBJECT
 public:
     explicit UserInfoDialog(QWidget *parent = nullptr);
 
-    void setUser(const User user);
+    void setUser(const User &userObj);
+
+    void setCompany(Company *ptr);
+
+    void setFlag(bool flag);
 
     void load();
+
+    bool checkExist();
+    bool checkEmpty();
+
 
     ~UserInfoDialog() override;
 
 private slots:
 
     void saveButton();
+
     void noButton();
 
 private:
     Ui::UserInfoDialog *ui;
     User *user;
 
-    bool flag;
+    Company *company;
+
+    bool flag;//标记模式 ：0.添加 1修改
 };
 
 

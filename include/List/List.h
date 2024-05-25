@@ -76,6 +76,7 @@ public:
     void deleteById(int id);            //根据id删除
     void deleteByParam(T param);        //根据用户信息删除
     void clear();                       //清空
+    void updateById(int id, T data);
 
     T get(int index);                   //获取
     void set(int index, T data);        //修改
@@ -101,6 +102,18 @@ public:
     friend List<U> sort(List<U> &lists, bool (*cmp)(U, U)); //自定义排序
 
 };
+
+template<typename T>
+void List<T>::updateById(int id, T data) {
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (ptr->data.GetId() == id) {
+            ptr->data = data;
+            break;
+        }
+        ptr = ptr->next;
+    }
+}
 
 template<typename T>
 void List<T>::deleteByParam(T param) {

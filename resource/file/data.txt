@@ -1,4 +1,5 @@
-3
-0 a a a a a a a a a 
-1 b b b b b b b b b 
-2 c b a b a b a b a 
+4
+0 q a 21 a a a 高级工程师 信息部 工程师 
+1 b b 23 b b b 助理工程师 人事部 员工 
+2 c b 45 b a b 工程师 人事部 员工 
+3 1 1 1 1 1 1 助理工程师 人事部 员工 

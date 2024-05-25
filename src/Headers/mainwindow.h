@@ -40,8 +40,10 @@ private slots:
 
     void Exit();
     /*每行button操作槽函数*/
+    void saveButton();
     void updateButton();
     void deleteButton();
+    void addButton();
 
 private:
     Ui::MainWindow *ui;
