@@ -34,7 +34,7 @@ public:
 
     void deleteUserById(const int &id);
 
-    void deleteUserByParam(const User param);
+    void deleteUserByParam(User param);
 
     void updateUser(int id, const User &user);
 

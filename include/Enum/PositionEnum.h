@@ -9,7 +9,7 @@
 
 enum PositionEnum{
     Employee = 0,        //员工
-    Engineer,            //工程师
+    PositionEngineer,    //工程师
     TeamLeader,          //团队领导
     DepartmentLeader,    //部门领导
     CompanyLeader,       //公司领导

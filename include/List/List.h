@@ -74,7 +74,7 @@ public:
     void insert(T data, int index);     //插入
     void erase(int index);              //删除
     void deleteById(int id);            //根据id删除
-    void deleteByParam(const T param);               //根据用户信息删除
+    void deleteByParam(T param);        //根据用户信息删除
     void clear();                       //清空
 
     T get(int index);                   //获取
@@ -103,7 +103,7 @@ public:
 };
 
 template<typename T>
-void List<T>::deleteByParam(const T param) {
+void List<T>::deleteByParam(T param) {
     Node *ptr = head;
     while (ptr != nullptr) {
         if (ptr->data.isMatch(param)) {

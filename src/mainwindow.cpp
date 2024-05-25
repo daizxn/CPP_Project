@@ -14,9 +14,13 @@
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
 
+    ui->setupUi(this);
+
     company = new Company(parent);
     company->loadFromFile();
-    ui->setupUi(this);
+
+    userInfoDialog = new UserInfoDialog(ui->employeeTableWidget);
+
     this->onLoad();
 
 
@@ -61,11 +65,11 @@ void MainWindow::employTableWidgetLoad() {
 
 
     ui->employeeTableWidget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 1);
-    ui->employeeTableWidget->setColumnWidth(UserInfoEnum::USERINFO_COUNT,150);
+    ui->employeeTableWidget->setColumnWidth(UserInfoEnum::USERINFO_COUNT, 150);
 
     //添加表头
     List<QString> list;
-    for (const auto& i: UserInfoName_zh) {
+    for (const auto &i: UserInfoName_zh) {
         list.pushBack(i);
     }
     list.pushBack("操作");
@@ -96,7 +100,7 @@ void MainWindow::employTableWidgetLoad() {
         auto *deleteButton = new QPushButton(ui->employeeTableWidget);
         deleteButton->setText("删除");
         SetBtnStyle(deleteButton, "204,153,0");
-        connect(deleteButton,&QPushButton::clicked,this,&MainWindow::deleteButton);
+        connect(deleteButton, &QPushButton::clicked, this, &MainWindow::deleteButton);
 
         qhBoxLayout->addWidget(updateButton);
         qhBoxLayout->addWidget(deleteButton);
@@ -120,27 +124,39 @@ void MainWindow::Exit() {
     exit(0);
 }
 
-void MainWindow::updateButton(){
+void MainWindow::updateButton() {
+    auto *btn = (QPushButton *) (sender());
+    auto *w_parent = (QWidget *) btn->parent();
+    int x = w_parent->frameGeometry().x();
+    int y = w_parent->frameGeometry().y();
+    QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x, y));
+    int row = index.row();
+
+    User param;
+    for (int i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
+        param.SetInfo(UserInfoEnum(i), ui->employeeTableWidget->item(row, i)->text());
+    }
+
 
 }
 
 void MainWindow::deleteButton() {
-    auto *btn = (QPushButton*)(sender());
-    auto *w_parent = (QWidget*)btn->parent();
+    auto *btn = (QPushButton *) (sender());
+    auto *w_parent = (QWidget *) btn->parent();
     int x = w_parent->frameGeometry().x();
     int y = w_parent->frameGeometry().y();
-    QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x,y));
+    QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x, y));
     int row = index.row();
 
 
     QTableWidgetItem *item = ui->employeeTableWidget->item(row, 0);
 
-    QString numbering=item->text();
+    QString numbering = item->text();
 
-    qDebug()<<numbering;
+    qDebug() << numbering;
 
     User param;
-    param.SetInfo(UserInfoEnum::Numbering,numbering);
+    param.SetInfo(UserInfoEnum::Numbering, numbering);
 
     company->deleteUserByParam(param);
 

@@ -15,7 +15,7 @@ enum UserInfoEnum {
     Ethnic,             //民族
     Specialized,        //专业
     Job,                //职称
-    department,         //部门
+    Department,         //部门
     Position,           //职务
     USERINFO_COUNT
 };

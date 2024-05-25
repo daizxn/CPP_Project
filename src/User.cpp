@@ -17,7 +17,7 @@ User::User(const QString &numbering, const QString &name, const QString &age, co
     Info[UserInfoEnum::Ethnic] = ethnic;
     Info[UserInfoEnum::Specialized] = specialized;
     Info[UserInfoEnum::Job] = job;
-    Info[UserInfoEnum::department] = department;
+    Info[UserInfoEnum::Department] = department;
     Info[UserInfoEnum::Position] = position;
 }
 

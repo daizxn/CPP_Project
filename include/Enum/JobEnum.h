@@ -9,7 +9,7 @@
 
 enum JobEnum {
     AssistantEngineer,      //助理工程师
-    Engineer,               //工程师
+    JobEngineer,               //工程师
     SeniorEngineer,         //高级工程师
     ProfessorialEngineer,   //教授级高级工程师
     JOB_COUNT
