@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::Exit);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveButton);
     connect(ui->addButton, &QPushButton::clicked, this, &MainWindow::addButton);
-    connect(ui->sortButton,&QPushButton::clicked,this,&MainWindow::sortButton);
+    connect(ui->sortButton, &QPushButton::clicked, this, &MainWindow::sortButton);
 }
 
 MainWindow::~MainWindow() {
@@ -71,7 +71,7 @@ void MainWindow::employTableWidgetLoad(Company *data) { //加载数据表
 
 
     ui->employeeTableWidget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 2); //设置列数
-    ui->employeeTableWidget->setColumnWidth(UserInfoEnum::USERINFO_COUNT, 150);//设置列宽
+    ui->employeeTableWidget->setColumnWidth(UserInfoEnum::USERINFO_COUNT + 1, 150);//设置列宽
     ui->employeeTableWidget->setRowCount(data->getSize());//设置行数
 
     //添加表头
@@ -214,7 +214,7 @@ void MainWindow::deleteButton() {
 
 /*style*/
 
-void SetBtnStyle(QPushButton *pBtn, QString clr) {
+void SetBtnStyle(QPushButton *pBtn, const QString &clr) {
     QString style = QString(
             "QPushButton{min-height:18px;font-size:10px;color:rgb(255, 255, 255);background:rgba(%1,0.8);border:1px;border-radius:5px;padding:1px 1px;font-family:Microsoft YaHei;}"
             "QPushButton:hover{color:rgb(255, 255, 255);border-style:solid;background: rgba(%2,0.6);border-radius:5px;border:1px;font-family:Microsoft YaHei;}"

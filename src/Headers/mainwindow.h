@@ -59,6 +59,6 @@ private:
     Company *company;
 };
 
-void SetBtnStyle(QPushButton *pBtn, QString clr);
+void SetBtnStyle(QPushButton *pBtn, const QString& clr);
 
 #endif //CPP_PROJECT_MAINWINDOW_H
