@@ -76,7 +76,10 @@ public:
     void deleteById(int id);            //根据id删除
     void deleteByParam(T param);        //根据用户信息删除
     void clear();                       //清空
-    void updateById(int id, T data);
+    void updateById(int id, T data);    //修改
+
+    template<class U>
+    List<T> sort(U*,int);
 
     T get(int index);                   //获取
     void set(int index, T data);        //修改
@@ -102,6 +105,25 @@ public:
     friend List<U> sort(List<U> &lists, bool (*cmp)(U, U)); //自定义排序
 
 };
+
+template<typename T>
+template<class U>
+List<T> List<T>::sort(U* rules,int ruleCount) {
+    typename List<T>::Node *ptr1 = this->head;
+    while (ptr1 != nullptr) {
+        typename List<T>::Node *ptr2 = ptr1->next;
+        while (ptr2 != nullptr) {
+            if (T::cmp(ptr1->data,ptr2->data,rules,ruleCount)) {
+                T temp = ptr1->data;
+                ptr1->data = ptr2->data;
+                ptr2->data = temp;
+            }
+            ptr2 = ptr2->next;
+        }
+        ptr1 = ptr1->next;
+    }
+    return *this;
+}
 
 template<typename T>
 void List<T>::updateById(int id, T data) {

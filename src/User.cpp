@@ -9,7 +9,7 @@
 User::User(const QString &numbering, const QString &name, const QString &age, const QString &education,
            const QString &ethnic, const QString &specialized, const QString &job, const QString &department,
            const QString &position) {
-    id=-1;
+    id = -1;
     Info[UserInfoEnum::Numbering] = numbering;
     Info[UserInfoEnum::Name] = name;
     Info[UserInfoEnum::Age] = age;
@@ -66,7 +66,7 @@ std::ifstream &operator>>(std::ifstream &is, User &user) {
     return is;
 }
 
-User& User::SetInfo(UserInfoEnum index, QString info) {
+User &User::SetInfo(UserInfoEnum index, QString info) {
     Info[index] = info;
     return *this;
 }
@@ -79,19 +79,43 @@ int User::GetId() const {
     return id;
 }
 
-User& User::SetId(int id) {
+User &User::SetId(int id) {
     this->id = id;
     return *this;
 }
 
 bool User::isMatch(const User &param) const {
-    if(param.id!=-1 && id!=param.id)
+    if (param.id != -1 && id != param.id)
         return false;
-    for(int i=0;i<UserInfoEnum::USERINFO_COUNT;i++){
-        if(param.Info[i]=="null")
+    for (int i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
+        if (param.Info[i] == "null")
             continue;
-        if(Info[i]!=param.Info[i])
+        if (Info[i] != param.Info[i])
             return false;
     }
     return true;
 }
+
+bool User::cmp(User x, User y, QPair<UserInfoEnum, int> *rule, int ruleCount) {
+    for (int i = 0; i < ruleCount; i++) {
+        UserInfoEnum nRule = rule[i].first;
+        int mode = rule[i].second;
+        if (nRule == UserInfoEnum::Age) {
+            if (x.Info[nRule].toInt() == y.Info[nRule].toInt())
+                continue;
+            else{
+                bool res=((x.Info[nRule].toInt() > y.Info[nRule].toInt()) ^ mode);
+                return res;
+            }
+        } else if (QString::compare(x.Info[nRule], y.Info[nRule]) == 0)
+            continue;
+        else{
+            bool res=((QString::compare(x.Info[nRule], y.Info[nRule]) > 0) ^ mode);
+            return res;
+        }
+
+    }
+    return true;
+}
+
+

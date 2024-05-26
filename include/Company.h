@@ -8,10 +8,12 @@
 
 #include <fstream>
 #include <QWidget>
+#include <QPair>
 
 #include "List/List.h"
 #include "User.h"
 #include "File.h"
+
 
 class Company;
 
@@ -42,13 +44,11 @@ public:
 
     User selectUserById(const int &id);
 
+    void sort(QPair<UserInfoEnum,int> *rules,int ruleCount);
+
     void saveToFile(const std::string &filePath = DATA_PATH);
 
     void loadFromFile(const std::string &filePath = DATA_PATH);
-
-    void sort();
-
-    void sort(bool (*cmp)(User a, User b, List<User> param));
 
     friend std::ofstream &operator<<(std::ofstream &os, const Company &company);
 

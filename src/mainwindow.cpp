@@ -146,6 +146,8 @@ void MainWindow::sortButton() {
 
     sortInfo->load();
     sortInfo->exec();
+
+    this->employTableWidgetLoad(company);
 }
 
 void MainWindow::addButton() {
@@ -185,7 +187,6 @@ void MainWindow::updateButton() {
     //加载数据
     userInfoDialog->load();
     userInfoDialog->exec();
-
     this->employTableWidgetLoad(company);
 }
 

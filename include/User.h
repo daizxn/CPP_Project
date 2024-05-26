@@ -6,9 +6,11 @@
 #define CPP_PROJECT_USER_H
 
 #include <fstream>
-#include <string>
+#include <QString>
+#include <QPair>
 
 
+#include "List/List.h"
 #include "Enum/UserInfoEnum.h"
 
 class User  {
@@ -40,6 +42,7 @@ public:
     User& SetId(int id);
 
     bool isMatch(const User &param) const;
+    static bool cmp(User x,User y,QPair<UserInfoEnum,int> *rule,int ruleCount);
 private:
     int id=-1;
     QString Info[UserInfoEnum::USERINFO_COUNT];

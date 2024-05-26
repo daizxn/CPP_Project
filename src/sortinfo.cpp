@@ -15,6 +15,7 @@ SortInfo::SortInfo(QWidget *parent) :
     connect(ui->addButton, &QPushButton::clicked, this, &SortInfo::addRule);
     connect(ui->deleteButton, &QPushButton::clicked, this, &SortInfo::deleteRule);
     connect(ui->noButton,&QPushButton::clicked,this,&SortInfo::no);
+    connect(ui->conformButton,&QPushButton::clicked,this,&SortInfo::conformButton);
 }
 
 SortInfo::~SortInfo() {
@@ -74,5 +75,25 @@ void SortInfo::deleteRule() {
 }
 
 void SortInfo::no() {
+    this->hide();
+}
+
+void SortInfo::conformButton() {
+    int ruleCount=ui->SortRuleTableWidget->rowCount();
+    if(ruleCount==0){
+        QMessageBox::warning(nullptr,"waring","排序条件不能为空",QMessageBox::Yes,QMessageBox::Yes);
+        return;
+    }
+    QPair<UserInfoEnum,int> *rules;
+    rules = new QPair<UserInfoEnum,int>[ruleCount];
+    for(int i=0;i<ruleCount;i++){
+        UserInfoEnum rule = UserInfoEnum(dynamic_cast<QComboBox *>(ui->SortRuleTableWidget->cellWidget(i,0))->currentData().toInt());
+        int mode =dynamic_cast<QComboBox *>(ui->SortRuleTableWidget->cellWidget(i,1))->currentData().toInt();
+        rules[i]=qMakePair(rule,mode);
+    }
+
+    company->sort(rules,ruleCount);
+    delete rules;
+
     this->hide();
 }

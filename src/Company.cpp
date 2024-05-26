@@ -74,3 +74,8 @@ void Company::loadFromFile(const std::string &filePath) {
 int Company::getSize() {
     return userList.getSize();
 }
+
+void Company::sort(QPair<UserInfoEnum,int> *rules,int ruleCount){
+    userList.sort(rules,ruleCount);
+}
+

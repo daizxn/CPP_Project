@@ -9,6 +9,7 @@
 #include <QPair>
 #include <QString>
 #include <QComboBox>
+#include <QMessageBox>
 
 #include "Company.h"
 #include "List/List.h"
@@ -37,6 +38,8 @@ private slots:
     void deleteRule();
 
     void no();
+
+    void conformButton();
 
 private:
     Ui::SortInfo *ui;
