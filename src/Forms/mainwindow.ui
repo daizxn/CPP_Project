@@ -130,20 +130,12 @@ color: rgb(255, 255, 255);</string>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
          <widget class="QWidget" name="employPage">
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="addButton">
-             <property name="styleSheet">
-              <string notr="true">background-color: #1E90FF;
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>新增</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
+           <item row="0" column="5">
             <widget class="QLabel" name="searchIcon">
              <property name="minimumSize">
               <size>
@@ -165,29 +157,14 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="sortButton">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="addButton">
+             <property name="styleSheet">
+              <string notr="true">background-color: #1E90FF;
+color: rgb(255, 255, 255);</string>
+             </property>
              <property name="text">
-              <string>排序</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="6">
-            <widget class="QTableWidget" name="employeeTableWidget"/>
-           </item>
-           <item row="0" column="5">
-            <widget class="QLineEdit" name="lineEdit">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
+              <string>新增</string>
              </property>
             </widget>
            </item>
@@ -211,9 +188,67 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
+           <item row="0" column="6">
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="sortButton">
+             <property name="text">
+              <string>排序</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="7">
+            <widget class="QCheckBox" name="checkBox">
+             <property name="text">
+              <string>模糊查询</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="8">
+            <widget class="QTableWidget" name="employeeTableWidget"/>
+           </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="page_2"/>
+         <widget class="QWidget" name="deparmentPage">
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QTreeWidget" name="deparmentTreeWidget">
+             <column>
+              <property name="text">
+               <string notr="true">1</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="jobPage">
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QTreeWidget" name="jobTreeWidget">
+             <column>
+              <property name="text">
+               <string notr="true">1</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>

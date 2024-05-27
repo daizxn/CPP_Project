@@ -33,6 +33,14 @@ public:
 
     void employTableWidgetLoad(Company *data);
 
+    void departmentTreeWidgetLoad(Company *data);
+
+    void jobTreeWidgetLoad(Company *data);
+
+    void queryLoad();//搜索初始化
+
+    void pageLoad();//设置初始页面
+
     ~MainWindow() override;
 
 
@@ -51,14 +59,23 @@ private slots:
 
     void saveButton();
 
+    /*搜索框*/
+    void query();
+
+    void checkFuzzyQuery();
+
+    /*treeBar选择*/
+    void treeBarClick();
+
 private:
     Ui::MainWindow *ui;
     UserInfoDialog *userInfoDialog;
     SortInfo *sortInfo;
+    bool onFuzzyQuery;
 
     Company *company;
 };
 
-void SetBtnStyle(QPushButton *pBtn, const QString& clr);
+void SetBtnStyle(QPushButton *pBtn, const QString &clr);
 
 #endif //CPP_PROJECT_MAINWINDOW_H
