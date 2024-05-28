@@ -10,6 +10,7 @@
 #include <QObject>
 #include <QString>
 #include <QDebug>
+#include <QTableWidget>
 
 #include "Company.h"
 #include "userinfodialog.h"
@@ -42,7 +43,9 @@ public:
     void pageLoad();//设置初始页面
 
     ~MainWindow() override;
+    void update(const User& param);
 
+    void del(QTableWidget *tableWidget);
 
 private slots:
 

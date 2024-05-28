@@ -44,6 +44,8 @@ void MainWindow::onLoad() {//初始化加载
     //pageLoad();
     treeBarLoad();
     employTableWidgetLoad(company);
+    jobTreeWidgetLoad(company);
+    departmentTreeWidgetLoad(company);
     queryLoad();
 }
 
@@ -163,8 +165,8 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
         widget->setSelectionMode(QAbstractItemView::SingleSelection);//可以选中单个
 
 
-        widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 1); //设置列数
-        //widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT+1 , 150);//设置列宽
+        widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 2); //设置列数
+        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT+1 , 150);//设置列宽
         widget->setRowCount(departmentList.getSize());//设置行数
 
         //添加表头
@@ -173,7 +175,7 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
         for (const auto &j: UserInfoName_zh) {
             list.pushBack(j);
         }
-//        list.pushBack("操作");
+        list.pushBack("操作");
         widget->setHorizontalHeaderLabels(list.toQList());
 
         //隐藏id
@@ -183,40 +185,46 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
         int rowCount = 0;//设置添加的第几行
         unsigned int size = departmentList.userList.getSize();
         while (rowCount != size) {
+            User user =departmentList.userList.get(rowCount);
 
             widget->setItem(rowCount, 0, new QTableWidgetItem(
-                    QString::number(departmentList.userList.get(rowCount).GetId())));
+                    QString::number(user.GetId())));
 
-            int i;
-            for (i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
-                widget->setItem(rowCount, i + 1, new QTableWidgetItem(
-                        departmentList.userList.get(rowCount).GetInfo(UserInfoEnum(i))));
+            int K;
+            for (K = 0; K < UserInfoEnum::USERINFO_COUNT; K++) {
+                widget->setItem(rowCount, K + 1, new QTableWidgetItem(
+                        user.GetInfo(UserInfoEnum(K))));
             }
-           /* *//*添加操作button*//*
+            //添加操作button
             auto *qWidget = new QWidget(widget);
             auto *qhBoxLayout = new QHBoxLayout(qWidget);
 
             //修改
-           *//* auto *updateButton = new QPushButton(widget);
+            auto *updateButton = new QPushButton(widget);
             updateButton->setText("修改");
             SetBtnStyle(updateButton, "30,227,207");
-            connect(updateButton, &QPushButton::clicked, this, &MainWindow::updateButton);
+            QObject:: connect(updateButton, &QPushButton::clicked, this,[=](){
+                this->update(user);
+            });
+
 
             //删除
             auto *deleteButton = new QPushButton(widget);
             deleteButton->setText("删除");
             SetBtnStyle(deleteButton, "204,153,0");
-            connect(deleteButton, &QPushButton::clicked, this, &MainWindow::deleteButton);
+            QObject:: connect(deleteButton, &QPushButton::clicked, this,[=](){
+                this->del(widget);
+            });
 
             qhBoxLayout->addWidget(updateButton);
             qhBoxLayout->addWidget(deleteButton);
 
             qhBoxLayout->setContentsMargins(0, 0, 0, 0);
 
-            widget->setCellWidget(rowCount, i + 1, qWidget);*//*
+            widget->setCellWidget(rowCount, K + 1, qWidget);
 
 
-            widget->setRowHeight(rowCount, 30);*/
+            widget->setRowHeight(rowCount, 30);
             rowCount++;
         }
 
@@ -252,8 +260,8 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
         widget->setSelectionMode(QAbstractItemView::SingleSelection);//可以选中单个
 
 
-        widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 1); //设置列数
-        //widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT +1, 150);//设置列宽
+        widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 2); //设置列数
+        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT +1, 150);//设置列宽
         widget->setRowCount(jobList.getSize());//设置行数
 
         //添加表头
@@ -262,7 +270,7 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
         for (const auto &j: UserInfoName_zh) {
             list.pushBack(j);
         }
-        //list.pushBack("操作");
+        list.pushBack("操作");
         widget->setHorizontalHeaderLabels(list.toQList());
 
         //隐藏id
@@ -272,16 +280,16 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
         int rowCount = 0;//设置添加的第几行
         unsigned int size = jobList.userList.getSize();
         while (rowCount != size) {
-
+            User user = jobList.userList.get(rowCount);
             widget->setItem(rowCount, 0, new QTableWidgetItem(
-                    QString::number(jobList.userList.get(rowCount).GetId())));
+                    QString::number(user.GetId())));
 
-            int i;
-            for (i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
-                widget->setItem(rowCount, i + 1, new QTableWidgetItem(
-                        jobList.userList.get(rowCount).GetInfo(UserInfoEnum(i))));
+            int k;
+            for (k = 0; k < UserInfoEnum::USERINFO_COUNT; k++) {
+                widget->setItem(rowCount, k + 1, new QTableWidgetItem(
+                        user.GetInfo(UserInfoEnum(k))));
             }
-            /*添加操作button*//*
+            //添加操作button
             auto *qWidget = new QWidget(widget);
             auto *qhBoxLayout = new QHBoxLayout(qWidget);
 
@@ -289,23 +297,27 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
             auto *updateButton = new QPushButton(widget);
             updateButton->setText("修改");
             SetBtnStyle(updateButton, "30,227,207");
-            connect(updateButton, &QPushButton::clicked, this, &MainWindow::updateButton);
+            QObject:: connect(updateButton, &QPushButton::clicked, this,[=](){
+                this->update(user);
+            });
 
             //删除
             auto *deleteButton = new QPushButton(widget);
             deleteButton->setText("删除");
             SetBtnStyle(deleteButton, "204,153,0");
-            connect(deleteButton, &QPushButton::clicked, this, &MainWindow::deleteButton);
+            connect(deleteButton, &QPushButton::clicked, this, [=](){
+                this->del(widget);
+            });
 
             qhBoxLayout->addWidget(updateButton);
             qhBoxLayout->addWidget(deleteButton);
 
             qhBoxLayout->setContentsMargins(0, 0, 0, 0);
 
-            widget->setCellWidget(rowCount, i + 1, qWidget);
+            widget->setCellWidget(rowCount, k + 1, qWidget);
 
 
-            widget->setRowHeight(rowCount, 30);*/
+            widget->setRowHeight(rowCount, 30);
             rowCount++;
         }
 
@@ -313,6 +325,43 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
 
         ui->jobTreeWidget->setItemWidget(sItem, 0, widget);
     }
+}
+
+void MainWindow::update(const User& param) {
+
+
+    //设置当前模式为更新
+    userInfoDialog->setFlag(true);
+    //传递数据
+    userInfoDialog->setCompany(company);
+    userInfoDialog->setUser(param);
+    //加载数据
+    userInfoDialog->load();
+    userInfoDialog->exec();
+    this->onLoad();
+
+}
+
+void MainWindow::del(QTableWidget *tableWidget) {
+    auto *btn = (QPushButton *) (sender());
+    auto *w_parent = (QWidget *) btn->parent();
+    int x = w_parent->frameGeometry().x();
+    int y = w_parent->frameGeometry().y();
+    QModelIndex index = tableWidget->indexAt(QPoint(x, y));
+    int row = index.row();
+
+    QTableWidgetItem *item = tableWidget->item(row, 0);
+
+    int id = item->text().toInt();
+
+    User param;
+    param.SetId(id);
+
+    company->deleteUserById(id);
+
+    tableWidget->removeRow(row);
+
+    this->onLoad();
 }
 
 void MainWindow::queryLoad() {
