@@ -86,14 +86,12 @@ bool UserInfoDialog::checkExist() {
     User param;
     param.SetInfo(UserInfoEnum::Numbering, ui->Numbering->text());
     //判断数据是否存在
-    User temp = company->selectUser(param).userList.get(0);
-    if (temp.GetId() != user->GetId() && temp.GetId() != -1){
-        QMessageBox::warning(nullptr, "waring", "编号已存在", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    User temp = company->selectUser(param).userList.get(0);//查询编号是否存在
+    if (temp.GetId() != user->GetId() && temp.GetId() != -1){//如果编号存在且不是当前用户
+        QMessageBox::warning(nullptr, "waring", "编号已存在", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);//弹出警告框
         return false;
     }
-
     return true;
-
 }
 
 bool UserInfoDialog::checkEmpty() {

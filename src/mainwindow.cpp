@@ -453,24 +453,26 @@ void MainWindow::updateButton() {
 }
 
 void MainWindow::deleteButton() {
+    //使用sender获得发出删除信号的对象
     auto *btn = (QPushButton *) (sender());
+    //获得删除对象所在的行数
     auto *w_parent = (QWidget *) btn->parent();
     int x = w_parent->frameGeometry().x();
     int y = w_parent->frameGeometry().y();
     QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x, y));
     int row = index.row();
 
+    //表格中删除
     QTableWidgetItem *item = ui->employeeTableWidget->item(row, 0);
 
+    //按id删除
     int id = item->text().toInt();
-
     User param;
     param.SetId(id);
 
     company->deleteUserById(id);
 
     ui->employeeTableWidget->removeRow(row);
-
 }
 
 void MainWindow::checkFuzzyQuery() {
