@@ -27,16 +27,18 @@ void Company::addUser(User &user) {
 void Company::deleteUserById(const int &id) {
     userList.deleteById(id);
 }
+
 void Company::deleteUserByParam(const User param) {
     userList.deleteByParam(param);
 }
+
 void Company::updateUser(int id, const User &user) {
-    userList.updateById(id,user);
+    userList.updateById(id, user);
 }
 
 Company Company::selectUser(const User &param) {
-    this->userList.select(param);
-    Company result(this->userList.select(param), this->key);
+    this->userList.select(param);//调用查找接口
+    Company result(this->userList.select(param), this->key);//修改格式内容
     return result;
 }
 
@@ -50,7 +52,7 @@ User Company::selectUserById(const int &id) {
 std::ifstream &operator>>(std::ifstream &is, Company &company) {
     is >> company.key;
     User user;
-    while (is>>user) {
+    while (is >> user) {
 
         company.userList.pushBack(user);
     }
@@ -75,7 +77,7 @@ int Company::getSize() {
     return userList.getSize();
 }
 
-void Company::sort(QPair<UserInfoEnum,int> *rules,int ruleCount){
-    userList.sort(rules,ruleCount);
+void Company::sort(QPair<UserInfoEnum, int> *rules, int ruleCount) {
+    userList.sort(rules, ruleCount);
 }
 

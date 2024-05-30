@@ -13,7 +13,7 @@
 #include "List/List.h"
 #include "Enum/UserInfoEnum.h"
 
-class User  {
+class User {
 
 
 public:
@@ -33,18 +33,20 @@ public:
 
     friend std::ofstream &operator<<(std::ofstream &os, const User &user);
 
-    User& SetInfo(UserInfoEnum index, QString info);
+    User &SetInfo(UserInfoEnum index, QString info);
 
     QString GetInfo(UserInfoEnum index);
 
     int GetId() const;
 
-    User& SetId(int id);
+    User &SetId(int id);
 
     bool isMatch(const User &param) const;
-    static bool cmp(User x,User y,QPair<UserInfoEnum,int> *rule,int ruleCount);
+
+    static bool cmp(User x, User y, QPair<UserInfoEnum, int> *rule, int ruleCount);
+
 private:
-    int id=-1;
+    int id = -1;
     QString Info[UserInfoEnum::USERINFO_COUNT];
 };
 

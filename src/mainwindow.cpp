@@ -102,13 +102,15 @@ void MainWindow::employTableWidgetLoad(Company *data) { //加载数据表
     unsigned int size = data->userList.getSize();
     while (rowCount != size) {
 
+        User user = data->userList.get(rowCount);//获得用户数据
+        //写入id
         ui->employeeTableWidget->setItem(rowCount, 0, new QTableWidgetItem(
-                QString::number(data->userList.get(rowCount).GetId())));
-
+                QString::number(user.GetId())));
+        //写入用户数据
         int i;
         for (i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
             ui->employeeTableWidget->setItem(rowCount, i + 1, new QTableWidgetItem(
-                    data->userList.get(rowCount).GetInfo(UserInfoEnum(i))));
+                    user.GetInfo(UserInfoEnum(i))));
         }
         /*添加操作button*/
         auto *qWidget = new QWidget(ui->employeeTableWidget);
@@ -147,13 +149,17 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
     ui->deparmentTreeWidget->setHeaderLabel("部门管理");
 
     for (const auto &i: DepartmentName_zh) {
+
         User param;
         param.SetInfo(UserInfoEnum::Department, i);
         Company departmentList = data->selectUser(param);
+        unsigned int size = departmentList.userList.getSize();
+
         auto *fItem = new QTreeWidgetItem(ui->deparmentTreeWidget, QStringList(
                 i + " (人数：" + QString::number(departmentList.getSize()) + "人)"));
         auto *sItem = new QTreeWidgetItem();
         fItem->addChild(sItem);
+
         ui->deparmentTreeWidget->addTopLevelItem(fItem);
 
         auto *widget = new QTableWidget(ui->deparmentTreeWidget);
@@ -166,8 +172,10 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
 
 
         widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 2); //设置列数
-        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT+1 , 150);//设置列宽
+        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT + 1, 150);//设置列宽
         widget->setRowCount(departmentList.getSize());//设置行数
+
+        widget->setFixedHeight(20 * (size) + 100);
 
         //添加表头
         List<QString> list;
@@ -183,9 +191,11 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
 
         //添加数据
         int rowCount = 0;//设置添加的第几行
-        unsigned int size = departmentList.userList.getSize();
+
         while (rowCount != size) {
-            User user =departmentList.userList.get(rowCount);
+            widget->setRowHeight(rowCount, 20);
+
+            User user = departmentList.userList.get(rowCount);
 
             widget->setItem(rowCount, 0, new QTableWidgetItem(
                     QString::number(user.GetId())));
@@ -203,7 +213,7 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
             auto *updateButton = new QPushButton(widget);
             updateButton->setText("修改");
             SetBtnStyle(updateButton, "30,227,207");
-            QObject:: connect(updateButton, &QPushButton::clicked, this,[=](){
+            QObject::connect(updateButton, &QPushButton::clicked, this, [=]() {
                 this->update(user);
             });
 
@@ -212,7 +222,7 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
             auto *deleteButton = new QPushButton(widget);
             deleteButton->setText("删除");
             SetBtnStyle(deleteButton, "204,153,0");
-            QObject:: connect(deleteButton, &QPushButton::clicked, this,[=](){
+            QObject::connect(deleteButton, &QPushButton::clicked, this, [=]() {
                 this->del(widget);
             });
 
@@ -242,14 +252,18 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
     ui->jobTreeWidget->setHeaderLabel("职位管理");
 
     for (const auto &i: JobName_zh) {
+
         User param;
         param.SetInfo(UserInfoEnum::Job, i);
         Company jobList = data->selectUser(param);
+        unsigned int size = jobList.userList.getSize();
+
         auto *fItem = new QTreeWidgetItem(ui->jobTreeWidget, QStringList(
                 i + " (人数：" + QString::number(jobList.getSize()) + "人)"));
         auto *sItem = new QTreeWidgetItem();
         fItem->addChild(sItem);
         ui->jobTreeWidget->addTopLevelItem(fItem);
+
 
         auto *widget = new QTableWidget(ui->jobTreeWidget);
         /*添加表*/
@@ -261,8 +275,10 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
 
 
         widget->setColumnCount(UserInfoEnum::USERINFO_COUNT + 2); //设置列数
-        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT +1, 150);//设置列宽
+        widget->setColumnWidth(UserInfoEnum::USERINFO_COUNT + 1, 150);//设置列宽
         widget->setRowCount(jobList.getSize());//设置行数
+
+        widget->setFixedHeight(20 * size + 100);
 
         //添加表头
         List<QString> list;
@@ -278,8 +294,10 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
 
         //添加数据
         int rowCount = 0;//设置添加的第几行
-        unsigned int size = jobList.userList.getSize();
+
         while (rowCount != size) {
+            widget->setRowHeight(rowCount, 20);
+
             User user = jobList.userList.get(rowCount);
             widget->setItem(rowCount, 0, new QTableWidgetItem(
                     QString::number(user.GetId())));
@@ -297,7 +315,7 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
             auto *updateButton = new QPushButton(widget);
             updateButton->setText("修改");
             SetBtnStyle(updateButton, "30,227,207");
-            QObject:: connect(updateButton, &QPushButton::clicked, this,[=](){
+            QObject::connect(updateButton, &QPushButton::clicked, this, [=]() {
                 this->update(user);
             });
 
@@ -305,7 +323,7 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
             auto *deleteButton = new QPushButton(widget);
             deleteButton->setText("删除");
             SetBtnStyle(deleteButton, "204,153,0");
-            connect(deleteButton, &QPushButton::clicked, this, [=](){
+            connect(deleteButton, &QPushButton::clicked, this, [=]() {
                 this->del(widget);
             });
 
@@ -327,7 +345,7 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
     }
 }
 
-void MainWindow::update(const User& param) {
+void MainWindow::update(const User &param) {
 
 
     //设置当前模式为更新

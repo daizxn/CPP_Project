@@ -8,7 +8,7 @@
 #include <QString>
 
 enum UserInfoEnum {
-    Numbering = 0,        //编号
+    Numbering = 0,      //编号
     Name,               //姓名
     Age,                //年龄
     Education,          //受教育程度

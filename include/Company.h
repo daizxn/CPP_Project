@@ -44,7 +44,7 @@ public:
 
     User selectUserById(const int &id);
 
-    void sort(QPair<UserInfoEnum,int> *rules,int ruleCount);
+    void sort(QPair<UserInfoEnum, int> *rules, int ruleCount);
 
     void saveToFile(const std::string &filePath = DATA_PATH);
 
@@ -55,8 +55,11 @@ public:
     friend std::ifstream &operator>>(std::ifstream &is, Company &company);
 
     int key;
+
     List<User> userList;
+
 signals:
+
 };
 
 #endif //CPP_PROJECT_COMPANY_H

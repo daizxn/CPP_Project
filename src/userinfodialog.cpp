@@ -43,9 +43,9 @@ void UserInfoDialog::load() {//初始化加载
     ui->Education->clear();
     ui->Specialized->clear();
     ui->Ethinic->clear();
-    ui->Job->setCurrentIndex(0);
-    ui->Department->setCurrentIndex(0);
-    ui->Position->setCurrentIndex(0);
+    ui->Job->clear();
+    ui->Department->clear();
+    ui->Position->clear();
 
     //根据原来内容将数据填入最开始的表中
     if (user->GetId() != -1)
