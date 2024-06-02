@@ -98,19 +98,19 @@ bool User::isMatch(const User &param) const {
 
 bool User::cmp(User x, User y, QPair<UserInfoEnum, int> *rule, int ruleCount) {
     for (int i = 0; i < ruleCount; i++) {
-        UserInfoEnum nRule = rule[i].first;
-        int mode = rule[i].second;
-        if (nRule == UserInfoEnum::Age) {
+        UserInfoEnum nRule = rule[i].first;//获得当前排序规则
+        int mode = rule[i].second;//获得当前排序模式
+        if (nRule == UserInfoEnum::Age) {//如果是年龄，需要特殊处理
             if (x.Info[nRule].toInt() == y.Info[nRule].toInt())
-                continue;
-            else{
-                bool res=((x.Info[nRule].toInt() > y.Info[nRule].toInt()) ^ mode);
+                continue;//如果相等，继续下一个规则
+            else {
+                bool res = ((x.Info[nRule].toInt() > y.Info[nRule].toInt()) ^ mode);
                 return res;
             }
         } else if (QString::compare(x.Info[nRule], y.Info[nRule]) == 0)
-            continue;
-        else{
-            bool res=((QString::compare(x.Info[nRule], y.Info[nRule]) > 0) ^ mode);
+            continue;//如果相等，继续下一个规则
+        else {
+            bool res = ((QString::compare(x.Info[nRule], y.Info[nRule]) > 0) ^ mode);
             return res;
         }
 
