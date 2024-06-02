@@ -32,7 +32,7 @@ namespace file {
         if (!ifs.is_open()) {
             throw std::runtime_error("File open failed");
         }
-        while (ifs>>data);
+        while (ifs>>data);//读取文件
         ifs.close();
     }
 }

@@ -17,13 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     company = new Company(parent);
-    company->loadFromFile();
+    company->loadFromFile();//加载数据
 
+    //初始化
     userInfoDialog = new UserInfoDialog(ui->employeeTableWidget);
     sortInfo = new SortInfo(ui->employeeTableWidget);
 
     this->onLoad();
-
 
     /*connect*/
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::Exit);
@@ -119,15 +119,16 @@ void MainWindow::employTableWidgetLoad(Company *data) { //加载数据表
         //修改
         auto *updateButton = new QPushButton(ui->employeeTableWidget);
         updateButton->setText("修改");
-        SetBtnStyle(updateButton, "30,227,207");
+        SetBtnStyle(updateButton, "30,227,207");//设置样式
         connect(updateButton, &QPushButton::clicked, this, &MainWindow::updateButton);
 
         //删除
         auto *deleteButton = new QPushButton(ui->employeeTableWidget);
         deleteButton->setText("删除");
-        SetBtnStyle(deleteButton, "204,153,0");
+        SetBtnStyle(deleteButton, "204,153,0");//设置样式
         connect(deleteButton, &QPushButton::clicked, this, &MainWindow::deleteButton);
 
+        //添加按钮
         qhBoxLayout->addWidget(updateButton);
         qhBoxLayout->addWidget(deleteButton);
 
@@ -143,7 +144,7 @@ void MainWindow::employTableWidgetLoad(Company *data) { //加载数据表
 
 }
 
-void MainWindow::departmentTreeWidgetLoad(Company *data) {
+void MainWindow::departmentTreeWidgetLoad(Company *data) {//加载部门树形图 具体与employTableWidgetLoad类似
     ui->deparmentTreeWidget->clear();
 
     ui->deparmentTreeWidget->setHeaderLabel("部门管理");
@@ -245,7 +246,7 @@ void MainWindow::departmentTreeWidgetLoad(Company *data) {
 
 }
 
-void MainWindow::jobTreeWidgetLoad(Company *data) {
+void MainWindow::jobTreeWidgetLoad(Company *data) {//加载职位树形图 具体与employTableWidgetLoad类似
 
     ui->jobTreeWidget->clear();
 
@@ -346,8 +347,6 @@ void MainWindow::jobTreeWidgetLoad(Company *data) {
 }
 
 void MainWindow::update(const User &param) {
-
-
     //设置当前模式为更新
     userInfoDialog->setFlag(true);
     //传递数据
@@ -361,6 +360,7 @@ void MainWindow::update(const User &param) {
 }
 
 void MainWindow::del(QTableWidget *tableWidget) {
+    //获得当前行数
     auto *btn = (QPushButton *) (sender());
     auto *w_parent = (QWidget *) btn->parent();
     int x = w_parent->frameGeometry().x();
@@ -374,7 +374,7 @@ void MainWindow::del(QTableWidget *tableWidget) {
 
     User param;
     param.SetId(id);
-
+    //删除
     company->deleteUserById(id);
 
     tableWidget->removeRow(row);
@@ -383,9 +383,9 @@ void MainWindow::del(QTableWidget *tableWidget) {
 }
 
 void MainWindow::queryLoad() {
-    this->onFuzzyQuery = false;
-    ui->lineEdit->clear();
-    ui->checkBox->setCheckState(Qt::Unchecked);
+    this->onFuzzyQuery = false;//默认不是模糊查询
+    ui->lineEdit->clear();//清空输入框
+    ui->checkBox->setCheckState(Qt::Unchecked);//默认不选中
 }
 
 void MainWindow::pageLoad() {
@@ -426,7 +426,6 @@ void MainWindow::addButton() {
 }
 
 void MainWindow::updateButton() {
-
     //获得当前行数
     auto *btn = (QPushButton *) (sender());
     auto *w_parent = (QWidget *) btn->parent();
@@ -435,6 +434,7 @@ void MainWindow::updateButton() {
     QModelIndex index = ui->employeeTableWidget->indexAt(QPoint(x, y));
     int row = index.row();
 
+    //获得当前行的数据
     User param;
     param.SetId(ui->employeeTableWidget->item(row, 0)->text().toInt());
     for (int i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
@@ -476,7 +476,7 @@ void MainWindow::deleteButton() {
 }
 
 void MainWindow::checkFuzzyQuery() {
-    if (ui->checkBox->isChecked())
+    if (ui->checkBox->isChecked())//选中
         onFuzzyQuery = true;
     else
         onFuzzyQuery = false;
@@ -511,13 +511,11 @@ void MainWindow::query() {
                 ui->employeeTableWidget->setRowHidden(items.at(i)->row(), false);
 
     }
-
-
 }
 
 void MainWindow::treeBarClick() {
     int nRow = ui->treeBar->currentIndex().row();
-
+    //根据点击的行数切换页面
     if (nRow == 0) {
         this->employTableWidgetLoad(company);
         ui->stackedWidget->setCurrentIndex(nRow);

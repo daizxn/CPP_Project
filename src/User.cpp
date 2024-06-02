@@ -4,8 +4,6 @@
 
 #include "User.h"
 
-#include <utility>
-
 User::User(const QString &numbering, const QString &name, const QString &age, const QString &education,
            const QString &ethnic, const QString &specialized, const QString &job, const QString &department,
            const QString &position) {
@@ -84,7 +82,11 @@ User &User::SetId(int id) {
     return *this;
 }
 
-bool User::isMatch(const User &param) const {
+/*
+ * isMarch 函数主要实现部分数据匹配，为代码中便于构造与匹配param参数设局
+ * */
+
+bool User::isMatch(const User &param) const { //匹配函数，去除"null"项，其余若匹配成功返回true
     if (param.id != -1 && id != param.id)
         return false;
     for (int i = 0; i < UserInfoEnum::USERINFO_COUNT; i++) {
@@ -96,21 +98,24 @@ bool User::isMatch(const User &param) const {
     return true;
 }
 
-bool User::cmp(User x, User y, QPair<UserInfoEnum, int> *rule, int ruleCount) {
+/*
+ * cmp函数主要实现排序规则的比较，返回值为bool类型，true为x>y，false为x<y，同时也实现多条件的排序
+ * */
+bool User::cmp(User x, User y, QPair<UserInfoEnum, int> *rule, int ruleCount) {//排序函数，实现排序规则
     for (int i = 0; i < ruleCount; i++) {
-        UserInfoEnum nRule = rule[i].first;
-        int mode = rule[i].second;
-        if (nRule == UserInfoEnum::Age) {
+        UserInfoEnum nRule = rule[i].first;//获得当前排序规则
+        int mode = rule[i].second;//获得当前排序模式
+        if (nRule == UserInfoEnum::Age) {//如果是年龄，需要特殊处理
             if (x.Info[nRule].toInt() == y.Info[nRule].toInt())
-                continue;
-            else{
-                bool res=((x.Info[nRule].toInt() > y.Info[nRule].toInt()) ^ mode);
+                continue;//如果相等，继续下一个规则
+            else {
+                bool res = ((x.Info[nRule].toInt() > y.Info[nRule].toInt()) ^ mode);
                 return res;
             }
         } else if (QString::compare(x.Info[nRule], y.Info[nRule]) == 0)
-            continue;
-        else{
-            bool res=((QString::compare(x.Info[nRule], y.Info[nRule]) > 0) ^ mode);
+            continue;//如果相等，继续下一个规则
+        else {
+            bool res = ((QString::compare(x.Info[nRule], y.Info[nRule]) > 0) ^ mode);
             return res;
         }
 

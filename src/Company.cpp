@@ -43,34 +43,33 @@ Company Company::selectUser(const User &param) {
 }
 
 User Company::selectUserById(const int &id) {
-    User param;
-    param.SetId(id);
-    Company result(this->userList.select(param), this->key);
+    User param;//创建参数
+    param.SetId(id);//设置id
+    Company result(this->userList.select(param), this->key);//调用查找接口
     return result.userList.get(0);
 }
 
 std::ifstream &operator>>(std::ifstream &is, Company &company) {
-    is >> company.key;
+    is >> company.key;//读取key
     User user;
     while (is >> user) {
-
         company.userList.pushBack(user);
     }
     return is;
 }
 
 std::ofstream &operator<<(std::ofstream &os, const Company &company) {
-    os << company.key;
-    os << company.userList;
+    os << company.key;//写入key
+    os << company.userList;//写入userList
     return os;
 }
 
 void Company::saveToFile(const std::string &filePath) {
-    file::Write(*this, filePath);
+    file::Write(*this, filePath);//调用写入接口
 }
 
 void Company::loadFromFile(const std::string &filePath) {
-    file::Read(*this, filePath);
+    file::Read(*this, filePath);//调用读取接口
 }
 
 int Company::getSize() {

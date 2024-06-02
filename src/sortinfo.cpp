@@ -80,20 +80,20 @@ void SortInfo::no() {
 
 void SortInfo::conformButton() {
     int ruleCount=ui->SortRuleTableWidget->rowCount();
-    if(ruleCount==0){
+    if(ruleCount==0){//没有排序条件
         QMessageBox::warning(nullptr,"waring","排序条件不能为空",QMessageBox::Yes,QMessageBox::Yes);
         return;
     }
     QPair<UserInfoEnum,int> *rules;
     rules = new QPair<UserInfoEnum,int>[ruleCount];
-    for(int i=0;i<ruleCount;i++){
+    for(int i=0;i<ruleCount;i++){//获取排序条件
         UserInfoEnum rule = UserInfoEnum(dynamic_cast<QComboBox *>(ui->SortRuleTableWidget->cellWidget(i,0))->currentData().toInt());
         int mode =dynamic_cast<QComboBox *>(ui->SortRuleTableWidget->cellWidget(i,1))->currentData().toInt();
         rules[i]=qMakePair(rule,mode);
     }
 
     company->sort(rules,ruleCount);
-    delete rules;
+    delete rules;//释放内存
 
     this->hide();
 }
